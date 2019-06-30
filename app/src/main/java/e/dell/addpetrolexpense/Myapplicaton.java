@@ -1,4 +1,4 @@
-package e.dell.project1;
+package e.dell.addpetrolexpense;
 
 import android.app.Application;
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project1</string>
+    <string name="app_name">Petrol Expense</string>
     <string name="str_display">Display</string>
     <string name="str_submit">Submit</string>
     <string name="str_km">Km.</string>

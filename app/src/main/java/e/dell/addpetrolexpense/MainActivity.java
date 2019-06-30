@@ -1,11 +1,10 @@
-package e.dell.project1;
+package e.dell.addpetrolexpense;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -19,9 +18,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import e.dell.project1.Adapter.DisplayDetail;
-import e.dell.project1.Database.DatabaseHelper;
-import e.dell.project1.ModelData.Model;
+import e.dell.addpetrolexpense.database.DatabaseHelper;
+import e.dell.addpetrolexpense.model.Model;
 
 public class MainActivity extends AppCompatActivity {
 
