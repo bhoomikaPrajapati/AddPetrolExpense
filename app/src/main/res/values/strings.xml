@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Project1</string>
+    <string name="str_display">Display</string>
+    <string name="str_submit">Submit</string>
+    <string name="str_km">Km.</string>
+    <string name="str_amount">Amount</string>
+    <string name="str_time">Time</string>
+    <string name="str_date">Date</string>
+</resources>
