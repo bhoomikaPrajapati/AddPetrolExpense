@@ -6,20 +6,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
+import e.dell.addpetrolexpense.listener.OnItemClickListenr;
 import e.dell.addpetrolexpense.model.Model;
 import e.dell.addpetrolexpense.R;
 
-public class DisplayDetail extends RecyclerView.Adapter<DisplayDetail.ViewHolder> {
+public class DisplayListAdapter extends RecyclerView.Adapter<DisplayListAdapter.ViewHolder> {
     private List<Model> detail;
     private Context context;
+    private OnItemClickListenr onItemClickListenr;
 
-    public DisplayDetail(List<Model> detail, Context context) {
+    public DisplayListAdapter(List<Model> detail, Context context, OnItemClickListenr onItemClickListenr) {
         this.detail = detail;
         this.context = context;
+        this.onItemClickListenr = onItemClickListenr;
     }
 
     @NonNull
@@ -29,12 +34,26 @@ public class DisplayDetail extends RecyclerView.Adapter<DisplayDetail.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Model userData = detail.get(position);
         holder.tvDate.setText(userData.getDatepik());
         holder.tvTime.setText(userData.getTimepik());
-        holder.tvAmount.setText(userData.getAmount());
-        holder.tvKm.setText(userData.getKm());
+        holder.tvAmount.setText(userData.getAmount() + " RS ");
+        holder.tvKm.setText(userData.getKm() + " KM ");
+
+
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListenr.onItemClickLister(v, position);
+            }
+        });
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListenr.onItemClickLister(v, position);
+            }
+        });
 
     }
 
@@ -49,6 +68,7 @@ public class DisplayDetail extends RecyclerView.Adapter<DisplayDetail.ViewHolder
         TextView tvTime;
         TextView tvAmount;
         TextView tvKm;
+        ImageView btnDelete, btnEdit;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -56,6 +76,8 @@ public class DisplayDetail extends RecyclerView.Adapter<DisplayDetail.ViewHolder
             tvTime = itemView.findViewById(R.id.tvTime);
             tvAmount = itemView.findViewById(R.id.tvAmount);
             tvKm = itemView.findViewById(R.id.tvKm);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
         }
     }
 }

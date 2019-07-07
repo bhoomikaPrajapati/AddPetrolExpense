@@ -3,14 +3,18 @@
     package="e.dell.addpetrolexpense">
 
     <application
-        android:name="e.dell.addpetrolexpense.Myapplicaton"
+        android:name=".Myapplicaton"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="e.dell.addpetrolexpense.MainActivity">
+        <activity
+            android:name=".AdminCategoryactivtiy"
+            android:label="@string/title_activity_admin_categoryactivtiy"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AddPetrolExpenseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -18,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="e.dell.addpetrolexpense.RecycleViewExample" />
+        <activity android:name=".ListPetrolExpenseActivity" />
     </application>
 
 </manifest>

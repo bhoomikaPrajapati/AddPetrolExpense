@@ -1,6 +1,10 @@
 package e.dell.addpetrolexpense.model;
 
-public class Model {
+import java.io.Serializable;
+
+public class Model implements Serializable {
+
+    public static String DATA="data";
 
     private String datepik;
     private  String timepik;

@@ -78,10 +78,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
 
     }
+
     public List<Model> getUserData() {
-        List<Model> userDataList=new ArrayList<>();
+        List<Model> userDataList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME ;
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -105,6 +106,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         return userDataList;
+    }
+
+    public void deleteExpenses(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+    public int updateData(Model model) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        // `id` and `timestamp` will be inserted automatically.
+        // no need to add them
+        values.put(COLUMN_DATE_PIK, model.getDatepik());
+        values.put(COLUMN_TIME_PIK, model.getTimepik());
+        values.put(COLUMN_AMOUNT, model.getAmount());
+        values.put(COLUMN_KM, model.getKm());
+
+        // updating row
+        return db.update(TABLE_NAME, values, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(model.getId())});
     }
 
 }
