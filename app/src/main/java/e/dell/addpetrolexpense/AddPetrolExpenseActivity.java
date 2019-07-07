@@ -3,17 +3,27 @@ package e.dell.addpetrolexpense;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import e.dell.addpetrolexpense.database.DatabaseHelper;
@@ -31,6 +41,7 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private boolean isUpdate = false;
     private Model updateModel;
+    private TextView tvSelect;
 
 
     @Override
@@ -51,6 +62,7 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
         etKm = findViewById(R.id.etKm);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnDisplay = findViewById(R.id.btnDisplay);
+        tvSelect = findViewById(R.id.tvSelect);
 
         long date = System.currentTimeMillis();
 
@@ -80,6 +92,15 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
 
     private void setListener() {
 
+
+        tvSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupWindow popUp = popupWindowsort();
+                popUp.showAsDropDown(tvSelect, 0, 0);
+            }
+        });
 
         tvDatePik.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +196,33 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private PopupWindow popupWindowsort() {
+        final ArrayList<String> userList = new ArrayList<>();
+        userList.add("Chirag");
+        userList.add("Bhoomika");
+
+        final PopupWindow popupWindow = new PopupWindow(this);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.popup_layout, userList);
+        final ListView listViewSort = new ListView(this);
+        listViewSort.setAdapter(adapter);
+
+        listViewSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                tvSelect.setText(userList.get(i));
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.setFocusable(true);
+        popupWindow.setWidth(300);
+        popupWindow.getAnimationStyle();
+
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindow.setContentView(listViewSort);
+        return popupWindow;
     }
 
 

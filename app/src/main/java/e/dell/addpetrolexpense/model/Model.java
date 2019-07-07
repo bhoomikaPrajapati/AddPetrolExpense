@@ -10,6 +10,7 @@ public class Model implements Serializable {
     private  String timepik;
     private String amount;
     private String km;
+    private String pay_user;
     private int id;
 
     public Model(int id) {
@@ -68,4 +69,11 @@ public class Model implements Serializable {
     }
 
 
+    public String getPay_user() {
+        return pay_user;
+    }
+
+    public void setPay_user(String pay_user) {
+        this.pay_user = pay_user;
+    }
 }

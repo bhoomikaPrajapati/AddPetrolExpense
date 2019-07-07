@@ -13,13 +13,14 @@ import e.dell.addpetrolexpense.model.Model;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static String DATABASE_NAME = "userData.db";
-    public static String TABLE_NAME = "User";
+    public static String DATABASE_NAME = "Expense.db";
+    public static String TABLE_NAME = "Expense";
     public static int DATABASE_VERSION = 1;
     public static String COLUMN_ID = "id";
     public static String COLUMN_DATE_PIK = "date";
     public static String COLUMN_TIME_PIK = "time";
     public static String COLUMN_AMOUNT = "amount";
+    public static String COLUMN_PAY_USER_NAME = "pay_user_name";
     public static String COLUMN_KM = "km";
 
 
@@ -37,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + COLUMN_DATE_PIK + " TEXT,"
                         + COLUMN_TIME_PIK + " TEXT,"
                         + COLUMN_AMOUNT + " TEXT,"
+                        + COLUMN_PAY_USER_NAME + " TEXT,"
                         + COLUMN_KM + " TEXT "
                         + ")";
 
@@ -66,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TIME_PIK, model.getTimepik());
         values.put(COLUMN_AMOUNT, model.getAmount());
         values.put(COLUMN_KM, model.getKm());
+        values.put(COLUMN_PAY_USER_NAME, model.getPay_user());
 
 
         // insert row
@@ -96,6 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 data.setTimepik(cursor.getString(cursor.getColumnIndex(COLUMN_TIME_PIK)));
                 data.setAmount(cursor.getString(cursor.getColumnIndex(COLUMN_AMOUNT)));
                 data.setKm(cursor.getString(cursor.getColumnIndex(COLUMN_KM)));
+                data.setPay_user(cursor.getString(cursor.getColumnIndex(COLUMN_PAY_USER_NAME)));
 
                 userDataList.add(data);
             } while (cursor.moveToNext());
@@ -126,6 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TIME_PIK, model.getTimepik());
         values.put(COLUMN_AMOUNT, model.getAmount());
         values.put(COLUMN_KM, model.getKm());
+        values.put(COLUMN_PAY_USER_NAME, model.getPay_user());
 
         // updating row
         return db.update(TABLE_NAME, values, COLUMN_ID + " = ?",
