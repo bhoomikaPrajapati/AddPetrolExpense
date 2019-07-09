@@ -40,6 +40,7 @@ public class DisplayListAdapter extends RecyclerView.Adapter<DisplayListAdapter.
         holder.tvTime.setText(userData.getTimepik());
         holder.tvAmount.setText(userData.getAmount() + " RS ");
         holder.tvKm.setText(userData.getKm() + " KM ");
+        holder.tvPayUser.setText("Pay by : "+userData.getPay_user());
 
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +68,7 @@ public class DisplayListAdapter extends RecyclerView.Adapter<DisplayListAdapter.
         TextView tvDate;
         TextView tvTime;
         TextView tvAmount;
-        TextView tvKm;
+        TextView tvKm,tvPayUser;
         ImageView btnDelete, btnEdit;
 
         public ViewHolder(View itemView) {
@@ -78,6 +79,7 @@ public class DisplayListAdapter extends RecyclerView.Adapter<DisplayListAdapter.
             tvKm = itemView.findViewById(R.id.tvKm);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnEdit = itemView.findViewById(R.id.btnEdit);
+            tvPayUser = itemView.findViewById(R.id.tvPayUser);
         }
     }
 }

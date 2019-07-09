@@ -5,23 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tvSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_arrow_drop_down"
+        android:padding="10dp"
+        android:text="ALL"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvDetail"
-        android:layout_above="@+id/tvTotal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tvTotal"
+        android:layout_below="@+id/tvSelect"
+        android:layout_marginTop="5dp" />
 
 
     <TextView
         android:id="@+id/tvTotal"
-        android:padding="10dp"
-        android:gravity="center|end"
-        android:textColor="@color/white"
-        android:textSize="18sp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
-        android:layout_height="wrap_content" />
+        android:gravity="center|end"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 </RelativeLayout>

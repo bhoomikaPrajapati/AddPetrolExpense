@@ -2,11 +2,14 @@ package e.dell.addpetrolexpense;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +25,16 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import e.dell.addpetrolexpense.database.DatabaseHelper;
 import e.dell.addpetrolexpense.model.Model;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AddPetrolExpenseActivity extends AppCompatActivity {
 
@@ -42,13 +49,19 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
     private boolean isUpdate = false;
     private Model updateModel;
     private TextView tvSelect;
-
+    private String mSelectedName = "";
+    private ArrayList<String> userList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         databaseHelper = new DatabaseHelper(this);
+        userList.clear();
+        userList.add("Bhoomika");
+        userList.add("Chirag");
+
+
         init();
         setListener();
 
@@ -63,6 +76,8 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btnSubmit);
         btnDisplay = findViewById(R.id.btnDisplay);
         tvSelect = findViewById(R.id.tvSelect);
+        tvSelect.setText(userList.get(0));
+        mSelectedName = userList.get(0);
 
         long date = System.currentTimeMillis();
 
@@ -81,7 +96,8 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
             etKm.setText(updateModel.getKm());
             tvDatePik.setText(updateModel.getDatepik());
             tvTimePik.setText(updateModel.getTimepik());
-
+            mSelectedName = updateModel.getPay_user();
+            tvSelect.setText(updateModel.getPay_user());
             isUpdate = true;
 
         }
@@ -92,6 +108,37 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
 
     private void setListener() {
 
+        etKm.addTextChangedListener(new TextWatcher() {
+            boolean isEdiging;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+                if (s.length() > 0) {
+                    if (isEdiging) return;
+                    isEdiging = true;
+                    String str = s.toString().replaceAll("[^\\d]", "");
+                    double s1 = Double.parseDouble(str);
+
+                    NumberFormat nf2 = NumberFormat.getInstance(Locale.ENGLISH);
+                    ((DecimalFormat) nf2).applyPattern("###,###.###");
+                    s.replace(0, s.length(), nf2.format(s1));
+
+                    isEdiging = false;
+                }
+            }
+        });
 
         tvSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,20 +196,23 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (tvDatePik.getText().toString().isEmpty()) {
-                    Toast.makeText(AddPetrolExpenseActivity.this, "plese enter date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPetrolExpenseActivity.this, "Enter date", Toast.LENGTH_SHORT).show();
                 } else if (tvTimePik.getText().toString().isEmpty()) {
-                    Toast.makeText(AddPetrolExpenseActivity.this, "plese enter time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPetrolExpenseActivity.this, "Enter time", Toast.LENGTH_SHORT).show();
 
                 } else if (etAmount.getText().toString().isEmpty()) {
-                    Toast.makeText(AddPetrolExpenseActivity.this, "plese enter Amount", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPetrolExpenseActivity.this, "Enter Amount", Toast.LENGTH_SHORT).show();
                 } else if (etKm.getText().toString().isEmpty()) {
-                    Toast.makeText(AddPetrolExpenseActivity.this, "plese enter km", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPetrolExpenseActivity.this, "Enter km", Toast.LENGTH_SHORT).show();
+                } else if (mSelectedName.equalsIgnoreCase("")) {
+                    Toast.makeText(AddPetrolExpenseActivity.this, "Select name", Toast.LENGTH_SHORT).show();
                 } else {
                     Model model = new Model();
                     model.setDatepik(tvDatePik.getText().toString());
                     model.setTimepik(tvTimePik.getText().toString());
                     model.setAmount(etAmount.getText().toString());
                     model.setKm(etKm.getText().toString());
+                    model.setPay_user(mSelectedName);
                     long i;
                     if (isUpdate) {
                         model.setId(updateModel.getId());
@@ -199,9 +249,7 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
     }
 
     private PopupWindow popupWindowsort() {
-        final ArrayList<String> userList = new ArrayList<>();
-        userList.add("Chirag");
-        userList.add("Bhoomika");
+
 
         final PopupWindow popupWindow = new PopupWindow(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.popup_layout, userList);
@@ -212,6 +260,7 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 tvSelect.setText(userList.get(i));
+                mSelectedName = userList.get(i);
                 popupWindow.dismiss();
             }
         });
@@ -225,5 +274,8 @@ public class AddPetrolExpenseActivity extends AppCompatActivity {
         return popupWindow;
     }
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 }
